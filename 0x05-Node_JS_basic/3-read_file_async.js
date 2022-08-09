@@ -1,12 +1,13 @@
+/* eslint-disable */
 const fs = require('fs');
 
-function countStudents(path) {
+const countStudents = (path) => {
   const promise = (res, rej) => {
-    fs.readFile(path, 'utf8', (error, data) => {
-      if (error) rej(Error('Cannot load the database'));
+    fs.readFile(path, 'utf8', (err, dataCollected) => {
+      if (err) rej(Error('Cannot load the database'));
       const messages = [];
       let message;
-      const content = data.toString().split('\n');
+      const content = dataCollected.toString().split('\n');
       let students = content.filter((item) => item);
       students = students.map((item) => item.split(','));
       const nStudents = students.length ? students.length - 1 : 0;
@@ -32,5 +33,6 @@ function countStudents(path) {
     });
   };
   return new Promise(promise);
-}
+};
+
 module.exports = countStudents;
